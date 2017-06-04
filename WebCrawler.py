@@ -33,18 +33,21 @@ if len(sys.argv) == 2:
 	# Count the number of products present in the that page
 	Count_per_page = No_of_products(Value)
 
-	# The pagination concept of moving to next pages, new pages hyperlink given at the end of the page
+	# The pagination concept of moving to next pages!
 	Value1 = Value.find('div',{'class','paginationNew'})
 	
 	Page_count = 1
 	
+	#Getting Total number of Pages using PaginationNew 
 	for t in Value1.find_all('a'):
 		if t.text.replace(" ","").isdigit():
 			Page_count = t.text.replace(" ","")
 
 	# Check the number of items in the last page
 	WebDriver.get("http://www.shopping.com/products~PG-"+str(Page_count)+"?KW="+sys.argv[1])
+	
 	Value = BeautifulSoup(WebDriver.page_source,"html.parser")
+	
 	Last_page_items = No_of_products(Value)
 
 	# Therefore, Total #of products= (Products per page * No of pages -1) + (Products on last page)
